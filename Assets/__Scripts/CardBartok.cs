@@ -16,7 +16,7 @@ public enum CBState
     idle
 }
 
-public class CardBartok : MonoBehaviour
+public class CardBartok : Card
 {
     // Static variables are shared by all instances of CardBartok
     static public float moveDuration = 0.5f;
@@ -26,6 +26,7 @@ public class CardBartok : MonoBehaviour
 
     [Header("Set Dyncamically: CardBartok")]
     public CBState state = CBState.drawpile;
+
     // Fields to store info the card will use to move and rotate
     public List<Vector3> bezierPts;
     public List<Quaternion> bezierRots;
