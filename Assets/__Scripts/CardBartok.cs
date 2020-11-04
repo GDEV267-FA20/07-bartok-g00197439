@@ -99,7 +99,7 @@ public class CardBartok : Card
 
                     if(reportFinishTo != null)
                     {
-                        reportFinishTo.SendMessage("CBCallBack", this);
+                        reportFinishTo.SendMessage("CBCallback", this);
                         reportFinishTo = null;
                     } else
                     {
