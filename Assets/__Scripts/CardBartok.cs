@@ -107,8 +107,8 @@ public class CardBartok : Card
                 {
                     Vector3 pos = Utils.Bezier(uC, bezierPts);
                     transform.localPosition = pos;
-                    Quaternion rotQ = Utils.Bezier(uC, bezierRots);
-                    transform.rotation = rotQ;
+                    //Quaternion rotQ = Utils.Bezier(uC, bezierRots);
+                    //transform.rotation = rotQ;
                 }
                 break;
         }
