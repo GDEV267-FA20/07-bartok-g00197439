@@ -208,6 +208,29 @@ public class Bartok : MonoBehaviour
     // The Draw function will pull a single card from the drawPile and return it
     public CardBartok Draw()
     {
+        if (drawPile.Count == 0)
+        {
+            int index;
+            while(discardPile.Count > 0)
+            {
+                index = Random.Range(0, discardPile.Count);
+                drawPile.Add(discardPile[index]);
+                discardPile.RemoveAt(index);
+            }
+            ArrangeDrawPile();
+            // show the cards moving to the drawPile
+            float t = Time.time;
+            foreach(CardBartok tCB in drawPile)
+            {
+                tCB.transform.localPosition = layout.discardPile.pos;
+                tCB.callbackPlayer = null;
+                tCB.MoveTo(layout.drawPile.pos);
+                tCB.timeStart = t;
+                t += 0.02f;
+                tCB.state = CBState.toDrawpile;
+                tCB.eventualSortLayer = "0";
+            }
+        }
         CardBartok cd = drawPile[0];
         drawPile.RemoveAt(0);
         return cd;
