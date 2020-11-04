@@ -213,25 +213,36 @@ public class Bartok : MonoBehaviour
         return cd;
     }
 
-    /*
-    private void Update()
+    public void CardClicked(CardBartok tCB)
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (CURRENT_PLAYER.type != PlayerType.human) return;
+        if (phase == TurnPhase.waiting) return;
+
+        switch(tCB.state)
         {
-            players[0].AddCard(Draw());
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            players[1].AddCard(Draw());
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            players[2].AddCard(Draw());
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            players[3].AddCard(Draw());
+            case CBState.drawpile:
+                // Draw the top card, not necessarily the one clicked
+                CardBartok cb = CURRENT_PLAYER.AddCard(Draw());
+                cb.callbackPlayer = CURRENT_PLAYER;
+                Utils.tr("Bartok:CardClicked()", "Draw", cb.name);
+                phase = TurnPhase.waiting;
+                break;
+
+            case CBState.hand:
+                // Check to see whether the card is valid
+                if(ValidPlay(tCB))
+                {
+                    CURRENT_PLAYER.RemoveCard(tCB);
+                    MoveToTarget(tCB);
+                    tCB.callbackPlayer = CURRENT_PLAYER;
+                    Utils.tr("Bartok:CardClicked()","Play", tCB.name, targetCard.name + " is target");
+                    phase = TurnPhase.waiting;
+                } else
+                {
+                    // Just ignore it but report what the player tried
+                    Utils.tr("Bartok:CardClicked()", "Attempted to Play", tCB.name, targetCard.name + " is target");
+                }
+                break;
         }
     }
-    */
 }
