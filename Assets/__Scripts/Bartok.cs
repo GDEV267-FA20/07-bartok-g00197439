@@ -154,6 +154,11 @@ public class Bartok : MonoBehaviour
         if(CURRENT_PLAYER != null)
         {
             lastPlayerNum = CURRENT_PLAYER.playerNum;
+            // Check for Game Over and need to reshuffle discard
+            if(CheckGameOver())
+            {
+                return;
+            }
         }
         CURRENT_PLAYER = players[num];
         phase = TurnPhase.pre;
@@ -162,6 +167,39 @@ public class Bartok : MonoBehaviour
 
         // Report the turn passing
         Utils.tr("Bartok:PassTurn()", "Old: " + lastPlayerNum, "New: " + CURRENT_PLAYER.playerNum);
+    }
+
+    public bool CheckGameOver()
+    {
+        // See if we need to reshuffle the discard pile into the draw pile
+        if(drawPile.Count == 0)
+        {
+            List<Card> cards = new List<Card>();
+            foreach(CardBartok cb in discardPile)
+            {
+                cards.Add(cb);
+            }
+            discardPile.Clear();
+            Deck.Shuffle(ref cards);
+            drawPile = UpgradeCardsList(cards);
+            ArrangeDrawPile();
+        }
+
+        // Check to see if the current player has won
+        if(CURRENT_PLAYER.hand.Count == 0)
+        {
+            // The player that just played has won
+            phase = TurnPhase.gameOver;
+            Invoke("RestartGame", 3);
+            return true;
+        }
+        return false;
+    }
+    
+    public void RestartGame()
+    {
+        CURRENT_PLAYER = null;
+        SceneManager.LoadScene("Bartok");
     }
 
     // ValidPlay verifies that the card chosen can be played on the discard pile
