@@ -19,10 +19,10 @@ public enum CBState
 public class CardBartok : Card
 {
     // Static variables are shared by all instances of CardBartok
-    static public float moveDuration = 0.5f;
-    static public string moveEasing = Easing.InOut;
-    static public float cardHeight = 3.5f;
-    static public float cardWidth = 2f;
+    static public float MOVE_DURATION = 0.5f;
+    static public string MOVE_EASING = Easing.InOut;
+    static public float CARD_HEIGHT = 3.5f;
+    static public float CARD_WIDTH = 2f;
 
     [Header("Set Dyncamically: CardBartok")]
     public CBState state = CBState.drawpile;
@@ -53,7 +53,7 @@ public class CardBartok : Card
             timeStart = Time.time;
         }
         // timeSuration always starts the same but can be overwritten later
-        timeDuration = moveDuration;
+        timeDuration = MOVE_DURATION;
 
         state = CBState.to;
     }
@@ -72,7 +72,7 @@ public class CardBartok : Card
             case CBState.toDrawpile:
             case CBState.to:
                 float u = (Time.time - timeStart) / timeDuration;
-                float uC = Easing.Ease(u, moveEasing);
+                float uC = Easing.Ease(u, MOVE_EASING);
 
                 if(u < 0)
                 {

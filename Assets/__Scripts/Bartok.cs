@@ -11,6 +11,7 @@ public class Bartok : MonoBehaviour
     public TextAsset deckXML;
     public TextAsset layoutXML;
     public Vector3 layoutCenter = Vector3.zero;
+    public float handFanDegrees = 10f;
 
     [Header("Set Dynamically")]
     public Deck deck;
@@ -45,7 +46,7 @@ public class Bartok : MonoBehaviour
         List<CardBartok> lCB = new List<CardBartok>();
         foreach(Card tCD in lCD)
         {
-            lCD.Add(tCD as CardBartok);
+            lCB.Add(tCD as CardBartok);
         }
         return lCB;
     }
