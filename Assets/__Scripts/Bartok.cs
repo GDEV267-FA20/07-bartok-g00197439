@@ -140,7 +140,7 @@ public class Bartok : MonoBehaviour
 
     public void StartGame()
     {
-        PassTurn(1);
+        PassTurn(Random.Range(0, 3));
     }
 
     public void PassTurn(int num = -1)
